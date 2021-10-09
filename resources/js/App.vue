@@ -1,27 +1,23 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png" />
-  <HelloWorld msg="Hello Vue 3 + TypeScript + Vite" />
+    <ConfigProvider>
+        <div class="flex">
+            <div class="text-primary">123</div>
+            <div>123</div>
+        </div>
+        <router-view />
+    </ConfigProvider>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import HelloWorld from './components/HelloWorld.vue'
+import { ConfigProvider } from 'ant-design-vue'
+import { useTitle } from '/@/hooks/web/useTitle'
 
 export default defineComponent({
-  name: 'App',
-  components: {
-    HelloWorld,
-  },
+    name: 'App',
+    components: { ConfigProvider },
+    setup() {
+        useTitle()
+    },
 })
 </script>
-
-<style lang="less">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>

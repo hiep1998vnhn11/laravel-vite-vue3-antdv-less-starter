@@ -1,0 +1,47 @@
+.loopmargin(@size) when (@size > 0) {
+  .loopmargin(@size - 1);
+
+  .mt-@{size} {
+    margin-top: (0.5rem * @size);
+  }
+
+  .mb-@{size} {
+    margin-bottom: (0.5rem * @size);
+  }
+
+  .ml-@{size} {
+    margin-left: (0.5rem * @size);
+  }
+
+  .mr-@{size} {
+    margin-right: (0.5rem * @size);
+  }
+
+   .pt-@{size} {
+    padding-top: (0.5rem * @size);
+  }
+
+  .pb-@{size} {
+    padding-bottom: (0.5rem * @size);
+  }
+
+  .pl-@{size} {
+    padding-left: (0.5rem * @size);
+  }
+
+  .pr-@{size} {
+    padding-right: (0.5rem * @size);
+  }
+
+  .px-@{size} {
+    padding-right: (0.5rem * @size);
+    padding-left: (0.5rem * @size);
+  }
+
+  .py-@{size} {
+    padding-top: (0.5rem * @size);
+    padding-bottom: (0.5rem * @size);
+  }
+}
+
+.loopmargin(10);
