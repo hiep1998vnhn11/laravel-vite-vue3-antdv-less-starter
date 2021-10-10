@@ -5,6 +5,11 @@ import vueJsx from '@vitejs/plugin-vue-jsx'
 import { configThemePlugin } from './build/vite/plugin/theme'
 import { configHtmlPlugin } from './build/vite/plugin/html'
 import { configSvgIconsPlugin } from './build/vite/plugin/svgSprite'
+import { configStyleImportPlugin } from './build/vite/plugin/styleImport'
+import { configVisualizerConfig } from './build/vite/plugin/visualizer'
+import { configPwaConfig } from './build/vite/plugin/pwa'
+import purgeIcons from 'vite-plugin-purge-icons'
+
 import { wrapperEnv } from './build/utils'
 import moment from 'moment'
 import pkg from './package.json'
@@ -74,6 +79,10 @@ export default ({ command, mode }: ConfigEnv) => {
       configThemePlugin(isBuild),
       configHtmlPlugin(viteEnv, isBuild),
       configSvgIconsPlugin(isBuild),
+      purgeIcons(),
+      configStyleImportPlugin(isBuild),
+      configVisualizerConfig(),
+      configPwaConfig(viteEnv),
     ],
     define: {
       __INTLIFY_PROD_DEVTOOLS__: false,
