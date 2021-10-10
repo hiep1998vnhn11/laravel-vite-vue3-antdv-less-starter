@@ -1,5 +1,4 @@
 import { watch, unref } from 'vue'
-import { useI18n } from '/@/hooks/web/useI18n'
 import { useTitle as usePageTitle } from '@vueuse/core'
 import { useGlobSetting } from '/@/hooks/setting'
 import { useRouter } from 'vue-router'
@@ -18,7 +17,6 @@ export function useTitle() {
             if (route.name === REDIRECT_NAME) {
                 return
             }
-
             const tTitle = route?.meta?.title as string
             pageTitle.value = tTitle ? ` ${tTitle} - ${title} ` : `${title}`
         },

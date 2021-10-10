@@ -70,7 +70,7 @@ const actions = {
 }
 
 const mutations = {
-    SET_STATE: function (state: AppState, payload: [AppStateKey, any]) {
+    SET_STATE: function (state: any, payload: [string, any]) {
         const [key, value] = payload
         state[key] = value
     },

@@ -1,7 +1,7 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
-
+import { configThemePlugin } from './build/vite/plugin/theme'
 import { resolve } from 'path'
 
 function pathResolve(dir: string) {
@@ -25,7 +25,7 @@ export default defineConfig({
             },
             {
                 find: /\/#\//,
-                replacement: pathResolve('resources/js/types') + '/',
+                replacement: pathResolve('resources/types') + '/',
             },
         ],
     },
@@ -38,7 +38,7 @@ export default defineConfig({
         manifest: true,
         emptyOutDir: false,
     },
-    plugins: [vue(), vueJsx()],
+    plugins: [vue(), vueJsx(), configThemePlugin(false)],
     css: {
         preprocessorOptions: {
             less: {

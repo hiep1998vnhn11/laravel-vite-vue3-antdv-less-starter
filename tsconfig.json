@@ -22,7 +22,9 @@
         "resources/js/**/*.d.ts",
         "resources/js/**/*.tsx",
         "resources/js/**/*.vue",
+        "resources/types/**/*.d.ts",
         "vite.config.ts",
-        "build/**/*.ts"
+        "build/**/*.ts",
+        "build/**/*.d.ts",
     ]
 }
