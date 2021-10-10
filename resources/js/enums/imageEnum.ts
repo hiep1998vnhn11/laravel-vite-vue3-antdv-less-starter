@@ -1,3 +1,3 @@
 export enum ErrorImage {
-    SCHOOL = '/images/default-school.jpg',
+  SCHOOL = '/images/default-school.jpg',
 }

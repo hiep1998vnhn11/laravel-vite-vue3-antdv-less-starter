@@ -1,22 +1,28 @@
-import {
-  defineAsyncComponent,
-} from 'vue';
-import { Spin } from 'ant-design-vue';
-import { noop } from '/@/utils/index';
+import { defineAsyncComponent } from 'vue'
+import { Spin } from 'ant-design-vue'
+import { noop } from '/@/utils/index'
 
 interface Options {
-  size?: 'default' | 'small' | 'large';
-  delay?: number;
-  timeout?: number;
-  loading?: boolean;
-  retry?: boolean;
+  size?: 'default' | 'small' | 'large'
+  delay?: number
+  timeout?: number
+  loading?: boolean
+  retry?: boolean
 }
 
 export function createAsyncComponent(loader: Fn, options: Options = {}) {
-  const { size = 'small', delay = 100, timeout = 30000, loading = false, retry = true } = options;
+  const {
+    size = 'small',
+    delay = 100,
+    timeout = 30000,
+    loading = false,
+    retry = true,
+  } = options
   return defineAsyncComponent({
     loader,
-    loadingComponent: loading ? <Spin spinning={true} size={size} /> : undefined,
+    loadingComponent: loading ? (
+      <Spin spinning={true} size={size} />
+    ) : undefined,
     timeout,
     delay,
     /**
@@ -30,10 +36,10 @@ export function createAsyncComponent(loader: Fn, options: Options = {}) {
       ? noop
       : (error, retry, fail, attempts) => {
           if (error.message.match(/fetch/) && attempts <= 3) {
-            retry();
+            retry()
           } else {
-            fail();
+            fail()
           }
         },
-  });
+  })
 }

@@ -5,8 +5,8 @@ import { computed, unref, ref } from 'vue'
 import { useStore } from 'vuex'
 
 import {
-    SIDE_BAR_MINI_WIDTH,
-    SIDE_BAR_SHOW_TIT_MINI_WIDTH,
+  SIDE_BAR_MINI_WIDTH,
+  SIDE_BAR_SHOW_TIT_MINI_WIDTH,
 } from '/@/enums/appEnum'
 import { MenuModeEnum, MenuTypeEnum, TriggerEnum } from '/@/enums/menuEnum'
 import { useFullContent } from '/@/hooks/web/useFullContent'
@@ -14,200 +14,190 @@ import { useFullContent } from '/@/hooks/web/useFullContent'
 const mixSideHasChildren = ref(false)
 
 export function useMenuSetting() {
-    const store = useStore()
-    const { getFullContent: fullContent } = useFullContent()
-    const getShowSidebar = computed(() => {
-        return (
-            unref(getSplit) ||
-            (unref(getShowMenu) &&
-                unref(getMenuMode) !== MenuModeEnum.HORIZONTAL &&
-                !unref(fullContent))
-        )
-    })
-
-    const getCollapsed = computed(
-        () => store.getters['app/getMenuSetting'].collapsed
+  const store = useStore()
+  const { getFullContent: fullContent } = useFullContent()
+  const getShowSidebar = computed(() => {
+    return (
+      unref(getSplit) ||
+      (unref(getShowMenu) &&
+        unref(getMenuMode) !== MenuModeEnum.HORIZONTAL &&
+        !unref(fullContent))
     )
+  })
 
-    const getMenuType = computed(() => store.getters['app/getMenuSetting'].type)
+  const getCollapsed = computed(
+    () => store.getters['app/getMenuSetting'].collapsed
+  )
 
-    const getMenuMode = computed(() => store.getters['app/getMenuSetting'].mode)
+  const getMenuType = computed(() => store.getters['app/getMenuSetting'].type)
 
-    const getMenuFixed = computed(
-        () => store.getters['app/getMenuSetting'].fixed
-    )
+  const getMenuMode = computed(() => store.getters['app/getMenuSetting'].mode)
 
-    const getShowMenu = computed(() => store.getters['app/getMenuSetting'].show)
+  const getMenuFixed = computed(() => store.getters['app/getMenuSetting'].fixed)
 
-    const getMenuHidden = computed(
-        () => store.getters['app/getMenuSetting'].hidden
-    )
+  const getShowMenu = computed(() => store.getters['app/getMenuSetting'].show)
 
-    const getMenuWidth = computed(
-        () => store.getters['app/getMenuSetting'].menuWidth
-    )
+  const getMenuHidden = computed(
+    () => store.getters['app/getMenuSetting'].hidden
+  )
 
-    const getTrigger = computed(
-        () => store.getters['app/getMenuSetting'].trigger
-    )
+  const getMenuWidth = computed(
+    () => store.getters['app/getMenuSetting'].menuWidth
+  )
 
-    const getMenuTheme = computed(
-        () => store.getters['app/getMenuSetting'].theme
-    )
+  const getTrigger = computed(() => store.getters['app/getMenuSetting'].trigger)
 
-    const getSplit = computed(() => store.getters['app/getMenuSetting'].split)
+  const getMenuTheme = computed(() => store.getters['app/getMenuSetting'].theme)
 
-    const getMenuBgColor = computed(
-        () => store.getters['app/getMenuSetting'].bgColor
-    )
+  const getSplit = computed(() => store.getters['app/getMenuSetting'].split)
 
-    const getMixSideTrigger = computed(
-        () => store.getters['app/getMenuSetting'].mixSideTrigger
-    )
+  const getMenuBgColor = computed(
+    () => store.getters['app/getMenuSetting'].bgColor
+  )
 
-    const getCanDrag = computed(
-        () => store.getters['app/getMenuSetting'].canDrag
-    )
+  const getMixSideTrigger = computed(
+    () => store.getters['app/getMenuSetting'].mixSideTrigger
+  )
 
-    const getAccordion = computed(
-        () => store.getters['app/getMenuSetting'].accordion
-    )
+  const getCanDrag = computed(() => store.getters['app/getMenuSetting'].canDrag)
 
-    const getMixSideFixed = computed(
-        () => store.getters['app/getMenuSetting'].mixSideFixed
-    )
+  const getAccordion = computed(
+    () => store.getters['app/getMenuSetting'].accordion
+  )
 
-    const getTopMenuAlign = computed(
-        () => store.getters['app/getMenuSetting'].topMenuAlign
-    )
+  const getMixSideFixed = computed(
+    () => store.getters['app/getMenuSetting'].mixSideFixed
+  )
 
-    const getCloseMixSidebarOnChange = computed(
-        () => store.getters['app/getMenuSetting'].closeMixSidebarOnChange
-    )
+  const getTopMenuAlign = computed(
+    () => store.getters['app/getMenuSetting'].topMenuAlign
+  )
 
-    const getIsSidebarType = computed(
-        () => unref(getMenuType) === MenuTypeEnum.SIDEBAR
-    )
+  const getCloseMixSidebarOnChange = computed(
+    () => store.getters['app/getMenuSetting'].closeMixSidebarOnChange
+  )
 
-    const getIsTopMenu = computed(
-        () => unref(getMenuType) === MenuTypeEnum.TOP_MENU
-    )
+  const getIsSidebarType = computed(
+    () => unref(getMenuType) === MenuTypeEnum.SIDEBAR
+  )
 
-    const getCollapsedShowTitle = computed(
-        () => store.getters['app/getMenuSetting'].collapsedShowTitle
-    )
+  const getIsTopMenu = computed(
+    () => unref(getMenuType) === MenuTypeEnum.TOP_MENU
+  )
 
-    const getShowTopMenu = computed(() => {
-        return unref(getMenuMode) === MenuModeEnum.HORIZONTAL || unref(getSplit)
-    })
+  const getCollapsedShowTitle = computed(
+    () => store.getters['app/getMenuSetting'].collapsedShowTitle
+  )
 
-    const getShowHeaderTrigger = computed(() => {
-        if (
-            unref(getMenuType) === MenuTypeEnum.TOP_MENU ||
-            !unref(getShowMenu) ||
-            unref(getMenuHidden)
-        ) {
-            return false
-        }
+  const getShowTopMenu = computed(() => {
+    return unref(getMenuMode) === MenuModeEnum.HORIZONTAL || unref(getSplit)
+  })
 
-        return unref(getTrigger) === TriggerEnum.HEADER
-    })
-
-    const getIsHorizontal = computed(() => {
-        return unref(getMenuMode) === MenuModeEnum.HORIZONTAL
-    })
-
-    const getIsMixSidebar = computed(() => {
-        return unref(getMenuType) === MenuTypeEnum.MIX_SIDEBAR
-    })
-
-    const getIsMixMode = computed(() => {
-        return (
-            unref(getMenuMode) === MenuModeEnum.INLINE &&
-            unref(getMenuType) === MenuTypeEnum.MIX
-        )
-    })
-
-    const getRealWidth = computed(() => {
-        if (unref(getIsMixSidebar)) {
-            return unref(getCollapsed) && !unref(getMixSideFixed)
-                ? unref(getMiniWidthNumber)
-                : unref(getMenuWidth)
-        }
-        return unref(getCollapsed)
-            ? unref(getMiniWidthNumber)
-            : unref(getMenuWidth)
-    })
-
-    const getMiniWidthNumber = computed(() => {
-        const { collapsedShowTitle } = store.getters['app/getMenuSetting']
-        return collapsedShowTitle
-            ? SIDE_BAR_SHOW_TIT_MINI_WIDTH
-            : SIDE_BAR_MINI_WIDTH
-    })
-
-    const getCalcContentWidth = computed(() => {
-        const width =
-            unref(getIsTopMenu) ||
-            !unref(getShowMenu) ||
-            (unref(getSplit) && unref(getMenuHidden))
-                ? 0
-                : unref(getIsMixSidebar)
-                ? (unref(getCollapsed)
-                      ? SIDE_BAR_MINI_WIDTH
-                      : SIDE_BAR_SHOW_TIT_MINI_WIDTH) +
-                  (unref(getMixSideFixed) && unref(mixSideHasChildren)
-                      ? unref(getRealWidth)
-                      : 0)
-                : unref(getRealWidth)
-
-        return `calc(100% - ${unref(width)}px)`
-    })
-
-    // Set menu configuration
-    function setMenuSetting(menuSetting: Partial<MenuSetting>): void {
-        store.commit('app/SET_PROJECT_CONFIG', { menuSetting })
+  const getShowHeaderTrigger = computed(() => {
+    if (
+      unref(getMenuType) === MenuTypeEnum.TOP_MENU ||
+      !unref(getShowMenu) ||
+      unref(getMenuHidden)
+    ) {
+      return false
     }
 
-    function toggleCollapsed() {
-        setMenuSetting({
-            collapsed: !unref(getCollapsed),
-        })
-    }
-    return {
-        setMenuSetting,
+    return unref(getTrigger) === TriggerEnum.HEADER
+  })
 
-        toggleCollapsed,
+  const getIsHorizontal = computed(() => {
+    return unref(getMenuMode) === MenuModeEnum.HORIZONTAL
+  })
 
-        getMenuFixed,
-        getRealWidth,
-        getMenuType,
-        getMenuMode,
-        getShowMenu,
-        getCollapsed,
-        getMiniWidthNumber,
-        getCalcContentWidth,
-        getMenuWidth,
-        getTrigger,
-        getSplit,
-        getMenuTheme,
-        getCanDrag,
-        getCollapsedShowTitle,
-        getIsHorizontal,
-        getIsSidebarType,
-        getAccordion,
-        getShowTopMenu,
-        getShowHeaderTrigger,
-        getTopMenuAlign,
-        getMenuHidden,
-        getIsTopMenu,
-        getMenuBgColor,
-        getShowSidebar,
-        getIsMixMode,
-        getIsMixSidebar,
-        getCloseMixSidebarOnChange,
-        getMixSideTrigger,
-        getMixSideFixed,
-        mixSideHasChildren,
+  const getIsMixSidebar = computed(() => {
+    return unref(getMenuType) === MenuTypeEnum.MIX_SIDEBAR
+  })
+
+  const getIsMixMode = computed(() => {
+    return (
+      unref(getMenuMode) === MenuModeEnum.INLINE &&
+      unref(getMenuType) === MenuTypeEnum.MIX
+    )
+  })
+
+  const getRealWidth = computed(() => {
+    if (unref(getIsMixSidebar)) {
+      return unref(getCollapsed) && !unref(getMixSideFixed)
+        ? unref(getMiniWidthNumber)
+        : unref(getMenuWidth)
     }
+    return unref(getCollapsed) ? unref(getMiniWidthNumber) : unref(getMenuWidth)
+  })
+
+  const getMiniWidthNumber = computed(() => {
+    const { collapsedShowTitle } = store.getters['app/getMenuSetting']
+    return collapsedShowTitle
+      ? SIDE_BAR_SHOW_TIT_MINI_WIDTH
+      : SIDE_BAR_MINI_WIDTH
+  })
+
+  const getCalcContentWidth = computed(() => {
+    const width =
+      unref(getIsTopMenu) ||
+      !unref(getShowMenu) ||
+      (unref(getSplit) && unref(getMenuHidden))
+        ? 0
+        : unref(getIsMixSidebar)
+        ? (unref(getCollapsed)
+            ? SIDE_BAR_MINI_WIDTH
+            : SIDE_BAR_SHOW_TIT_MINI_WIDTH) +
+          (unref(getMixSideFixed) && unref(mixSideHasChildren)
+            ? unref(getRealWidth)
+            : 0)
+        : unref(getRealWidth)
+
+    return `calc(100% - ${unref(width)}px)`
+  })
+
+  // Set menu configuration
+  function setMenuSetting(menuSetting: Partial<MenuSetting>): void {
+    store.commit('app/SET_PROJECT_CONFIG', { menuSetting })
+  }
+
+  function toggleCollapsed() {
+    setMenuSetting({
+      collapsed: !unref(getCollapsed),
+    })
+  }
+  return {
+    setMenuSetting,
+
+    toggleCollapsed,
+
+    getMenuFixed,
+    getRealWidth,
+    getMenuType,
+    getMenuMode,
+    getShowMenu,
+    getCollapsed,
+    getMiniWidthNumber,
+    getCalcContentWidth,
+    getMenuWidth,
+    getTrigger,
+    getSplit,
+    getMenuTheme,
+    getCanDrag,
+    getCollapsedShowTitle,
+    getIsHorizontal,
+    getIsSidebarType,
+    getAccordion,
+    getShowTopMenu,
+    getShowHeaderTrigger,
+    getTopMenuAlign,
+    getMenuHidden,
+    getIsTopMenu,
+    getMenuBgColor,
+    getShowSidebar,
+    getIsMixMode,
+    getIsMixSidebar,
+    getCloseMixSidebarOnChange,
+    getMixSideTrigger,
+    getMixSideFixed,
+    mixSideHasChildren,
+  }
 }

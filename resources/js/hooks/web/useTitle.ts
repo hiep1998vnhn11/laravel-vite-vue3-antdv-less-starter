@@ -6,20 +6,20 @@ import { useRouter } from 'vue-router'
 import { REDIRECT_NAME } from '/@/router/constant'
 
 export function useTitle() {
-    const { title } = useGlobSetting()
-    const { currentRoute } = useRouter()
-    const pageTitle = usePageTitle()
+  const { title } = useGlobSetting()
+  const { currentRoute } = useRouter()
+  const pageTitle = usePageTitle()
 
-    watch(
-        () => currentRoute.value.path,
-        () => {
-            const route = unref(currentRoute)
-            if (route.name === REDIRECT_NAME) {
-                return
-            }
-            const tTitle = route?.meta?.title as string
-            pageTitle.value = tTitle ? ` ${tTitle} - ${title} ` : `${title}`
-        },
-        { immediate: true }
-    )
+  watch(
+    () => currentRoute.value.path,
+    () => {
+      const route = unref(currentRoute)
+      if (route.name === REDIRECT_NAME) {
+        return
+      }
+      const tTitle = route?.meta?.title as string
+      pageTitle.value = tTitle ? ` ${tTitle} - ${title} ` : `${title}`
+    },
+    { immediate: true }
+  )
 }

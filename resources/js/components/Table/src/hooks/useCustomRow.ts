@@ -1,15 +1,15 @@
-import type { ComputedRef } from 'vue';
-import type { BasicTableProps } from '../types/table';
-import { unref } from 'vue';
-import { ROW_KEY } from '../const';
-import { isString, isFunction } from '/@/utils/is';
+import type { ComputedRef } from 'vue'
+import type { BasicTableProps } from '../types/table'
+import { unref } from 'vue'
+import { ROW_KEY } from '../const'
+import { isString, isFunction } from '/@/utils/is'
 
 interface Options {
-  setSelectedRowKeys: (keys: string[]) => void;
-  getSelectRowKeys: () => string[];
-  clearSelectedRowKeys: () => void;
-  emit: EmitType;
-  getAutoCreateKey: ComputedRef<boolean | undefined>;
+  setSelectedRowKeys: (keys: string[]) => void
+  getSelectRowKeys: () => string[]
+  clearSelectedRowKeys: () => void
+  emit: EmitType
+  getAutoCreateKey: ComputedRef<boolean | undefined>
 }
 
 function getKey(
@@ -18,75 +18,81 @@ function getKey(
   autoCreateKey?: boolean
 ) {
   if (!rowKey || autoCreateKey) {
-    return record[ROW_KEY];
+    return record[ROW_KEY]
   }
   if (isString(rowKey)) {
-    return record[rowKey];
+    return record[rowKey]
   }
   if (isFunction(rowKey)) {
-    return record[rowKey(record)];
+    return record[rowKey(record)]
   }
-  return null;
+  return null
 }
 
 export function useCustomRow(
   propsRef: ComputedRef<BasicTableProps>,
-  { setSelectedRowKeys, getSelectRowKeys, getAutoCreateKey, clearSelectedRowKeys, emit }: Options
+  {
+    setSelectedRowKeys,
+    getSelectRowKeys,
+    getAutoCreateKey,
+    clearSelectedRowKeys,
+    emit,
+  }: Options
 ) {
   const customRow = (record: Recordable, index: number) => {
     return {
       onClick: (e: Event) => {
-        e?.stopPropagation();
+        e?.stopPropagation()
         function handleClick() {
-          const { rowSelection, rowKey, clickToRowSelect } = unref(propsRef);
-          if (!rowSelection || !clickToRowSelect) return;
-          const keys = getSelectRowKeys();
-          const key = getKey(record, rowKey, unref(getAutoCreateKey));
-          if (!key) return;
+          const { rowSelection, rowKey, clickToRowSelect } = unref(propsRef)
+          if (!rowSelection || !clickToRowSelect) return
+          const keys = getSelectRowKeys()
+          const key = getKey(record, rowKey, unref(getAutoCreateKey))
+          if (!key) return
 
-          const isCheckbox = rowSelection.type === 'checkbox';
+          const isCheckbox = rowSelection.type === 'checkbox'
           if (isCheckbox) {
             if (!keys.includes(key)) {
-              setSelectedRowKeys([...keys, key]);
-              return;
+              setSelectedRowKeys([...keys, key])
+              return
             }
-            const keyIndex = keys.findIndex((item) => item === key);
-            keys.splice(keyIndex, 1);
-            setSelectedRowKeys(keys);
-            return;
+            const keyIndex = keys.findIndex((item) => item === key)
+            keys.splice(keyIndex, 1)
+            setSelectedRowKeys(keys)
+            return
           }
 
-          const isRadio = rowSelection.type === 'radio';
+          const isRadio = rowSelection.type === 'radio'
           if (isRadio) {
             if (!keys.includes(key)) {
               if (keys.length) {
-                clearSelectedRowKeys();
+                clearSelectedRowKeys()
               }
-              setSelectedRowKeys([key]);
-              return;
+              setSelectedRowKeys([key])
+              return
             }
-            clearSelectedRowKeys();
+            clearSelectedRowKeys()
           }
         }
-        handleClick();
-        emit('row-click', record, index, e);
+        handleClick()
+        emit('row-click', record, index, e)
       },
       onDblclick: (event: Event) => {
-        emit('row-dbClick', record, index, event);
+        emit('row-dbClick', record, index, event)
       },
       onContextmenu: (event: Event) => {
-        emit('row-contextmenu', record, index, event);
+        emit('row-contextmenu', record, index, event)
       },
       onMouseenter: (event: Event) => {
-        emit('row-mouseenter', record, index, event);
+        emit('row-mouseenter', record, index, event)
       },
       onMouseleave: (event: Event) => {
-        emit('row-mouseleave', record, index, event);
+        emit('row-mouseleave', record, index, event)
       },
-    };
-  };
+    }
+  }
 
   return {
     customRow,
-  };
+  }
 }

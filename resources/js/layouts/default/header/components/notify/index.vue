@@ -1,51 +1,51 @@
 <template>
-    <div :class="prefixCls">
-        <Popover
-            title=""
-            trigger="click"
-            :overlayClassName="`${prefixCls}__overlay`"
-        >
-            <svg
-                width="25"
-                height="24"
-                viewBox="0 0 25 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-            >
-                <path
-                    d="M19.72 14.49L18.72 12.83C18.51 12.46 18.32 11.76 18.32 11.35V8.82C18.32 6.47 16.94 4.44 14.95 3.49C14.43 2.57 13.47 
+  <div :class="prefixCls">
+    <Popover
+      title=""
+      trigger="click"
+      :overlayClassName="`${prefixCls}__overlay`"
+    >
+      <svg
+        width="25"
+        height="24"
+        viewBox="0 0 25 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M19.72 14.49L18.72 12.83C18.51 12.46 18.32 11.76 18.32 11.35V8.82C18.32 6.47 16.94 4.44 14.95 3.49C14.43 2.57 13.47 
                         2 12.37 2C11.28 2 10.3 2.59 9.78001 3.52C7.83001 4.49 6.48001 6.5 6.48001 8.82V11.35C6.48001 11.76 6.29001 12.46 6.08001 
                         12.82L5.07001 14.49C4.67001 15.16 4.58001 15.9 4.83001 16.58C5.07001 17.25 5.64001 17.77 6.38001 18.02C8.32001 18.68
                         10.36 19 12.4 19C14.44 19 16.48 18.68 18.42 18.03C19.12 17.8 19.66 17.27 19.92 16.58C20.18 15.89 20.11 15.13 19.72 
                         14.49Z"
-                    fill="#98A5CD"
-                />
-                <path
-                    d="M15.21 20.01C14.79 21.17 13.68 22 12.38 22C11.59 22 10.81 21.68 10.26 21.11C9.94 20.81 9.7 20.41 9.56 20C9.69 20.02 
+          fill="#98A5CD"
+        />
+        <path
+          d="M15.21 20.01C14.79 21.17 13.68 22 12.38 22C11.59 22 10.81 21.68 10.26 21.11C9.94 20.81 9.7 20.41 9.56 20C9.69 20.02 
                         9.82 20.03 9.96 20.05C10.19 20.08 10.43 20.11 10.67 20.13C11.24 20.18 11.82 20.21 12.4 20.21C12.97 20.21 13.54 20.18 
                         14.1 20.13C14.31 20.11 14.52 20.1 14.72 20.07C14.88 20.05 15.04 20.03 15.21 20.01Z"
-                    fill="#98A5CD"
-                />
-                <circle cx="16.88" cy="3.5" r="2.5" fill="#EB5757" />
-            </svg>
+          fill="#98A5CD"
+        />
+        <circle cx="16.88" cy="3.5" r="2.5" fill="#EB5757" />
+      </svg>
 
-            <template #content>
-                <Tabs>
-                    <template v-for="item in tabListData" :key="item.key">
-                        <TabPane>
-                            <template #tab>
-                                {{ item.name }}
-                                <span v-if="item.list.length !== 0">
-                                    ({{ item.list.length }})
-                                </span>
-                            </template>
-                            <NoticeList :list="item.list" />
-                        </TabPane>
-                    </template>
-                </Tabs>
-            </template>
-        </Popover>
-    </div>
+      <template #content>
+        <Tabs>
+          <template v-for="item in tabListData" :key="item.key">
+            <TabPane>
+              <template #tab>
+                {{ item.name }}
+                <span v-if="item.list.length !== 0">
+                  ({{ item.list.length }})
+                </span>
+              </template>
+              <NoticeList :list="item.list" />
+            </TabPane>
+          </template>
+        </Tabs>
+      </template>
+    </Popover>
+  </div>
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue'
@@ -56,56 +56,56 @@ import NoticeList from './NoticeList.vue'
 import { useDesign } from '/@/hooks/web/useDesign'
 
 export default defineComponent({
-    components: {
-        Popover,
-        BellOutlined,
-        Tabs,
-        TabPane: Tabs.TabPane,
-        Badge,
-        NoticeList,
-    },
-    setup() {
-        const { prefixCls } = useDesign('header-notify')
+  components: {
+    Popover,
+    BellOutlined,
+    Tabs,
+    TabPane: Tabs.TabPane,
+    Badge,
+    NoticeList,
+  },
+  setup() {
+    const { prefixCls } = useDesign('header-notify')
 
-        let count = 0
+    let count = 0
 
-        for (let i = 0; i < tabListData.length; i++) {
-            count += tabListData[i].list.length
-        }
+    for (let i = 0; i < tabListData.length; i++) {
+      count += tabListData[i].list.length
+    }
 
-        return {
-            prefixCls,
-            tabListData,
-            count,
-            numberStyle: {},
-        }
-    },
+    return {
+      prefixCls,
+      tabListData,
+      count,
+      numberStyle: {},
+    }
+  },
 })
 </script>
 <style lang="less">
 @prefix-cls: ~'@{namespace}-header-notify';
 
 .@{prefix-cls} {
-    padding-top: 2px;
+  padding-top: 2px;
 
-    &__overlay {
-        max-width: 360px;
+  &__overlay {
+    max-width: 360px;
+  }
+
+  .ant-tabs-content {
+    width: 300px;
+  }
+
+  .ant-badge {
+    font-size: 18px;
+
+    .ant-badge-multiple-words {
+      padding: 0 4px;
     }
 
-    .ant-tabs-content {
-        width: 300px;
+    svg {
+      width: 0.9em;
     }
-
-    .ant-badge {
-        font-size: 18px;
-
-        .ant-badge-multiple-words {
-            padding: 0 4px;
-        }
-
-        svg {
-            width: 0.9em;
-        }
-    }
+  }
 }
 </style>

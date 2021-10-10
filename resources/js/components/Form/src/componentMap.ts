@@ -5,19 +5,19 @@ import type { ComponentType } from './types/index'
  * Component list, register here to setting it in the form
  */
 import {
-    Input,
-    Select,
-    Radio,
-    Checkbox,
-    AutoComplete,
-    Cascader,
-    DatePicker,
-    InputNumber,
-    Switch,
-    TimePicker,
-    TreeSelect,
-    Slider,
-    Rate,
+  Input,
+  Select,
+  Radio,
+  Checkbox,
+  AutoComplete,
+  Cascader,
+  DatePicker,
+  InputNumber,
+  Switch,
+  TimePicker,
+  TreeSelect,
+  Slider,
+  Rate,
 } from 'ant-design-vue'
 
 import RadioButtonGroup from './components/RadioButtonGroup.vue'
@@ -59,11 +59,11 @@ componentMap.set('InputCountDown', CountdownInput)
 componentMap.set('Upload', BasicUpload)
 
 export function add(compName: ComponentType, component: Component) {
-    componentMap.set(compName, component)
+  componentMap.set(compName, component)
 }
 
 export function del(compName: ComponentType) {
-    componentMap.delete(compName)
+  componentMap.delete(compName)
 }
 
 export { componentMap }

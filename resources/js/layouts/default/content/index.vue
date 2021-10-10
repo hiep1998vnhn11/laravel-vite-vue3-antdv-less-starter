@@ -1,10 +1,10 @@
 <template>
-    <div
-        :class="[prefixCls, getLayoutContentMode]"
-        v-loading="getOpenPageLoading && getPageLoading"
-    >
-        <PageLayout />
-    </div>
+  <div
+    :class="[prefixCls, getLayoutContentMode]"
+    v-loading="getOpenPageLoading && getPageLoading"
+  >
+    <PageLayout />
+  </div>
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue'
@@ -15,41 +15,41 @@ import { useTransitionSetting } from '/@/hooks/setting/useTransitionSetting'
 import { useContentViewHeight } from './useContentViewHeight'
 
 export default defineComponent({
-    name: 'LayoutContent',
-    components: { PageLayout },
-    setup() {
-        const { prefixCls } = useDesign('layout-content')
-        const { getOpenPageLoading } = useTransitionSetting()
-        const { getLayoutContentMode, getPageLoading } = useRootSetting()
+  name: 'LayoutContent',
+  components: { PageLayout },
+  setup() {
+    const { prefixCls } = useDesign('layout-content')
+    const { getOpenPageLoading } = useTransitionSetting()
+    const { getLayoutContentMode, getPageLoading } = useRootSetting()
 
-        useContentViewHeight()
-        return {
-            prefixCls,
-            getOpenPageLoading,
-            getLayoutContentMode,
-            getPageLoading,
-        }
-    },
+    useContentViewHeight()
+    return {
+      prefixCls,
+      getOpenPageLoading,
+      getLayoutContentMode,
+      getPageLoading,
+    }
+  },
 })
 </script>
 <style lang="less">
 @prefix-cls: ~'@{namespace}-layout-content';
 
 .@{prefix-cls} {
-    position: relative;
-    flex: 1 1 auto;
-    min-height: 0;
-    padding-top: 21px;
+  position: relative;
+  flex: 1 1 auto;
+  min-height: 0;
+  padding-top: 21px;
 
-    &.fixed {
-        width: 1200px;
-        margin: 0 auto;
-    }
+  &.fixed {
+    width: 1200px;
+    margin: 0 auto;
+  }
 
-    &-loading {
-        position: absolute;
-        top: 200px;
-        z-index: @page-loading-z-index;
-    }
+  &-loading {
+    position: absolute;
+    top: 200px;
+    z-index: @page-loading-z-index;
+  }
 }
 </style>

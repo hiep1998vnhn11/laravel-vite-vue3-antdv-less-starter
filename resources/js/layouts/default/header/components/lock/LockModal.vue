@@ -25,97 +25,99 @@
   </BasicModal>
 </template>
 <script lang="ts">
-  import { defineComponent, computed } from 'vue';
-  import { useI18n } from '/@/hooks/web/useI18n';
-  import { useDesign } from '/@/hooks/web/useDesign';
-  import { BasicModal, useModalInner } from '/@/components/Modal/index';
-  import { BasicForm, useForm } from '/@/components/Form/index';
+import { defineComponent, computed } from 'vue'
+import { useI18n } from '/@/hooks/web/useI18n'
+import { useDesign } from '/@/hooks/web/useDesign'
+import { BasicModal, useModalInner } from '/@/components/Modal/index'
+import { BasicForm, useForm } from '/@/components/Form/index'
 
-  import { useStore } from 'vuex';
-  import headerImg from '/@/assets/images/header.jpg';
-  export default defineComponent({
-    name: 'LockModal',
-    components: { BasicModal, BasicForm },
+import { useStore } from 'vuex'
+import headerImg from '/@/assets/images/header.jpg'
+export default defineComponent({
+  name: 'LockModal',
+  components: { BasicModal, BasicForm },
 
-    setup() {
-      const { t } = useI18n();
-      const { prefixCls } = useDesign('header-lock-modal');
-      const store = useStore();
+  setup() {
+    const { t } = useI18n()
+    const { prefixCls } = useDesign('header-lock-modal')
+    const store = useStore()
 
-      const getRealName = computed(() => store.getters['user/getUserInfo']?.realName);
-      const [register, { closeModal }] = useModalInner();
+    const getRealName = computed(
+      () => store.getters['user/getUserInfo']?.realName
+    )
+    const [register, { closeModal }] = useModalInner()
 
-      const [registerForm, { validateFields, resetFields }] = useForm({
-        showActionButtonGroup: false,
-        schemas: [
-          {
-            field: 'password',
-            label: t('layout.header.lockScreenPassword'),
-            component: 'InputPassword',
-            required: true,
-          },
-        ],
-      });
+    const [registerForm, { validateFields, resetFields }] = useForm({
+      showActionButtonGroup: false,
+      schemas: [
+        {
+          field: 'password',
+          label: t('layout.header.lockScreenPassword'),
+          component: 'InputPassword',
+          required: true,
+        },
+      ],
+    })
 
-      async function handleLock() {
-        const values = (await validateFields()) as any;
-        const password: string | undefined = values.password;
-        closeModal();
+    async function handleLock() {
+      const values = (await validateFields()) as any
+      const password: string | undefined = values.password
+      closeModal()
 
-        store.commit('lock/SET_LOCK_INFO', {
-          isLock: true,
-          pwd: password,
-        });
-        await resetFields();
-      }
+      store.commit('lock/SET_LOCK_INFO', {
+        isLock: true,
+        pwd: password,
+      })
+      await resetFields()
+    }
 
-      const avatar = computed(() => {
-        const { avatar } = store.getters['user/getUserInfo'];
-        return avatar || headerImg;
-      });
+    const avatar = computed(() => {
+      const { avatar } = store.getters['user/getUserInfo']
+      return avatar || headerImg
+    })
 
-      return {
-        t,
-        prefixCls,
-        getRealName,
-        register,
-        registerForm,
-        handleLock,
-        avatar,
-      };
-    },
-  });
+    return {
+      t,
+      prefixCls,
+      getRealName,
+      register,
+      registerForm,
+      handleLock,
+      avatar,
+    }
+  },
+})
 </script>
 <style lang="less">
-  @prefix-cls: ~'@{namespace}-header-lock-modal';
+@prefix-cls: ~'@{namespace}-header-lock-modal';
 
-  .@{prefix-cls} {
-    &__entry {
-      position: relative;
-      //height: 240px;
-      padding: 130px 30px 30px 30px;
-      border-radius: 10px;
+.@{prefix-cls} {
+  &__entry {
+    position: relative;
+    //height: 240px;
+    padding: 130px 30px 30px 30px;
+    border-radius: 10px;
+  }
+
+  &__header {
+    position: absolute;
+    top: 0;
+    left: calc(50% - 45px);
+    width: auto;
+    text-align: center;
+
+    &-img {
+      width: 70px;
+      border-radius: 50%;
     }
 
-    &__header {
-      position: absolute;
-      top: 0;
-      left: calc(50% - 45px);
-      width: auto;
-      text-align: center;
-
-      &-img {
-        width: 70px;
-        border-radius: 50%;
-      }
-
-      &-name {
-        margin-top: 5px;
-      }
-    }
-
-    &__footer {
-      text-align: center;
+    &-name {
+      margin-top: 5px;
     }
   }
+
+  &__footer {
+    text-align: center;
+  }
+}
 </style>

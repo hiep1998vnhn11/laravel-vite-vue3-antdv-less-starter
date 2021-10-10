@@ -1,4 +1,4 @@
-import type { Plugin } from 'vite';
+import type { Plugin } from 'vite'
 
 /**
  * TODO
@@ -7,19 +7,19 @@ import type { Plugin } from 'vite';
  */
 
 export function configHmrPlugin(): Plugin {
-  return {
-    name: 'singleHMR',
-    handleHotUpdate({ modules, file }) {
-      if (file.match(/xml$/)) return [];
+    return {
+        name: 'singleHMR',
+        handleHotUpdate({ modules, file }) {
+            if (file.match(/xml$/)) return []
 
-      modules.forEach((m) => {
-        if (!m.url.match(/\.(css|less)/)) {
-          m.importedModules = new Set();
-          m.importers = new Set();
-        }
-      });
+            modules.forEach((m) => {
+                if (!m.url.match(/\.(css|less)/)) {
+                    m.importedModules = new Set()
+                    m.importers = new Set()
+                }
+            })
 
-      return modules;
-    },
-  };
+            return modules
+        },
+    }
 }

@@ -1,8 +1,14 @@
-import type { PropType } from 'vue';
-import type { ReplaceFields, ActionItem, Keys, CheckKeys, ContextMenuOptions } from './typing';
-import type { ContextMenuItem } from '/@/hooks/web/useContextMenu';
-import type { TreeDataItem } from 'ant-design-vue/es/tree/Tree';
-import { propTypes } from '/@/utils/propTypes';
+import type { PropType } from 'vue'
+import type {
+  ReplaceFields,
+  ActionItem,
+  Keys,
+  CheckKeys,
+  ContextMenuOptions,
+} from './typing'
+import type { ContextMenuItem } from '/@/hooks/web/useContextMenu'
+import type { TreeDataItem } from 'ant-design-vue/es/tree/Tree'
+import { propTypes } from '/@/utils/propTypes'
 
 export const basicProps = {
   value: {
@@ -58,14 +64,16 @@ export const basicProps = {
   },
 
   beforeRightClick: {
-    type: Function as PropType<(...arg: any) => ContextMenuItem[] | ContextMenuOptions>,
+    type: Function as PropType<
+      (...arg: any) => ContextMenuItem[] | ContextMenuOptions
+    >,
     default: null,
   },
 
   rightMenuList: {
     type: Array as PropType<ContextMenuItem[]>,
   },
-};
+}
 
 export const treeNodeProps = {
   actionList: {
@@ -79,4 +87,4 @@ export const treeNodeProps = {
     type: Array as PropType<TreeDataItem[]>,
     default: () => [],
   },
-};
+}

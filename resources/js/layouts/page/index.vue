@@ -1,26 +1,26 @@
 <template>
-    <RouterView>
-        <template #default="{ Component, route }">
-            <transition
-                :name="
-                    getTransitionName({
-                        route,
-                        openCache,
-                        enableTransition: getEnableTransition,
-                        cacheTabs: getCaches,
-                        def: getBasicTransition,
-                    })
-                "
-                mode="out-in"
-                appear
-            >
-                <keep-alive v-if="openCache" :include="getCaches">
-                    <component :is="Component" :key="route.fullPath" />
-                </keep-alive>
-                <component v-else :is="Component" :key="route.fullPath" />
-            </transition>
-        </template>
-    </RouterView>
+  <RouterView>
+    <template #default="{ Component, route }">
+      <transition
+        :name="
+          getTransitionName({
+            route,
+            openCache,
+            enableTransition: getEnableTransition,
+            cacheTabs: getCaches,
+            def: getBasicTransition,
+          })
+        "
+        mode="out-in"
+        appear
+      >
+        <keep-alive v-if="openCache" :include="getCaches">
+          <component :is="Component" :key="route.fullPath" />
+        </keep-alive>
+        <component v-else :is="Component" :key="route.fullPath" />
+      </transition>
+    </template>
+  </RouterView>
 </template>
 
 <script lang="ts">
@@ -35,35 +35,34 @@ import { getTransitionName } from './transition'
 import { useStore } from 'vuex'
 
 export default defineComponent({
-    name: 'PageLayout',
-    setup() {
-        const { getShowMultipleTab } = useMultipleTabSetting()
-        const store = useStore()
+  name: 'PageLayout',
+  setup() {
+    const { getShowMultipleTab } = useMultipleTabSetting()
+    const store = useStore()
 
-        const { getOpenKeepAlive, getCanEmbedIFramePage } = useRootSetting()
+    const { getOpenKeepAlive, getCanEmbedIFramePage } = useRootSetting()
 
-        const { getBasicTransition, getEnableTransition } =
-            useTransitionSetting()
+    const { getBasicTransition, getEnableTransition } = useTransitionSetting()
 
-        const openCache = computed(
-            () => unref(getOpenKeepAlive) && unref(getShowMultipleTab)
-        )
+    const openCache = computed(
+      () => unref(getOpenKeepAlive) && unref(getShowMultipleTab)
+    )
 
-        const getCaches = computed((): string[] => {
-            if (!unref(getOpenKeepAlive)) {
-                return []
-            }
-            return store.getters['multipleTab/getCachedTabList']
-        })
+    const getCaches = computed((): string[] => {
+      if (!unref(getOpenKeepAlive)) {
+        return []
+      }
+      return store.getters['multipleTab/getCachedTabList']
+    })
 
-        return {
-            getTransitionName,
-            openCache,
-            getEnableTransition,
-            getBasicTransition,
-            getCaches,
-            getCanEmbedIFramePage,
-        }
-    },
+    return {
+      getTransitionName,
+      openCache,
+      getEnableTransition,
+      getBasicTransition,
+      getCaches,
+      getCanEmbedIFramePage,
+    }
+  },
 })
 </script>

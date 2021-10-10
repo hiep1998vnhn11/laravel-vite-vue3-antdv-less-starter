@@ -11,76 +11,76 @@ import { SettingButtonPositionEnum } from '/@/enums/appEnum'
 import { createAsyncComponent } from '/@/utils/factory/createAsyncComponent'
 
 export default defineComponent({
-    name: 'LayoutFeatures',
-    components: {
-        BackTop,
-        SettingDrawer: createAsyncComponent(
-            () => import('/@/layouts/default/setting/index.vue')
-        ),
-    },
-    setup() {
-        const {
-            getUseOpenBackTop,
-            getShowSettingButton,
-            getSettingButtonPosition,
-            getFullContent,
-        } = useRootSetting()
-        const store = useStore()
-        const { prefixCls } = useDesign('setting-drawer-fearure')
-        const { getShowHeader } = useHeaderSetting()
+  name: 'LayoutFeatures',
+  components: {
+    BackTop,
+    SettingDrawer: createAsyncComponent(
+      () => import('/@/layouts/default/setting/index.vue')
+    ),
+  },
+  setup() {
+    const {
+      getUseOpenBackTop,
+      getShowSettingButton,
+      getSettingButtonPosition,
+      getFullContent,
+    } = useRootSetting()
+    const store = useStore()
+    const { prefixCls } = useDesign('setting-drawer-fearure')
+    const { getShowHeader } = useHeaderSetting()
 
-        const getIsSessionTimeout = computed(
-            () => store.getters['user/sessionTimeout']
-        )
+    const getIsSessionTimeout = computed(
+      () => store.getters['user/sessionTimeout']
+    )
 
-        const getIsFixedSettingDrawer = computed(() => {
-            if (!unref(getShowSettingButton)) {
-                return false
-            }
-            const settingButtonPosition = unref(getSettingButtonPosition)
+    const getIsFixedSettingDrawer = computed(() => {
+      if (!unref(getShowSettingButton)) {
+        return false
+      }
+      const settingButtonPosition = unref(getSettingButtonPosition)
 
-            if (settingButtonPosition === SettingButtonPositionEnum.AUTO) {
-                return !unref(getShowHeader) || unref(getFullContent)
-            }
-            return settingButtonPosition === SettingButtonPositionEnum.FIXED
-        })
+      if (settingButtonPosition === SettingButtonPositionEnum.AUTO) {
+        return !unref(getShowHeader) || unref(getFullContent)
+      }
+      return settingButtonPosition === SettingButtonPositionEnum.FIXED
+    })
 
-        return {
-            getTarget: () => document.body,
-            getUseOpenBackTop,
-            getIsFixedSettingDrawer,
-            prefixCls,
-            getIsSessionTimeout,
-        }
-    },
+    return {
+      getTarget: () => document.body,
+      getUseOpenBackTop,
+      getIsFixedSettingDrawer,
+      prefixCls,
+      getIsSessionTimeout,
+    }
+  },
 })
 </script>
 
 <template>
-    <BackTop v-if="getUseOpenBackTop" :target="getTarget" />
-    <SettingDrawer v-if="getIsFixedSettingDrawer" :class="prefixCls" />
+  <BackTop v-if="getUseOpenBackTop" :target="getTarget" />
+  <SettingDrawer v-if="getIsFixedSettingDrawer" :class="prefixCls" />
 </template>
 
 <style lang="less">
 @prefix-cls: ~'@{namespace}-setting-drawer-fearure';
 
 .@{prefix-cls} {
-    position: absolute;
-    top: 45%;
-    right: 0;
-    z-index: 10;
-    display: flex;
-    padding: 10px;
-    color: @white;
-    cursor: pointer;
-    background-color: @primary-color;
-    border-radius: 6px 0 0 6px;
-    justify-content: center;
-    align-items: center;
+  position: absolute;
+  top: 45%;
+  right: 0;
+  z-index: 10;
+  display: flex;
+  padding: 10px;
+  color: @white;
+  cursor: pointer;
+  background-color: @primary-color;
+  border-radius: 6px 0 0 6px;
+  justify-content: center;
+  align-items: center;
 
-    svg {
-        width: 1em;
-        height: 1em;
-    }
+  svg {
+    width: 1em;
+    height: 1em;
+  }
 }
 </style>

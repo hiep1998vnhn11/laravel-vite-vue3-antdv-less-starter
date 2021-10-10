@@ -7,9 +7,6 @@ import {
     GetCodeParams,
     ResetPasswordParams,
 } from './model/userModel'
-
-import { ErrorMessageMode } from '/#/axios'
-
 enum Api {
     Login = '/auth/login',
     Logout = '/auth/logout',

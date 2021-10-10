@@ -8,7 +8,7 @@
     <title>{{config('app.name')}}</title>
     @env('production')
     {{-- Production --}}
-    @foreach ($manifest['resources/js/app.ts']['css'] as $css)
+    @foreach ($manifest['resources/js/main.ts']['css'] as $css)
     <link rel="stylesheet" href="{{ config('app.url') . '/' .$css }}" />
     @endforeach
     <script src="/_app.config.js"></script>
@@ -16,8 +16,8 @@
     </script>
     @else
     {{-- Development --}}
-    <script type="module" src="http://localhost:9001/@vite/client"></script>
-    <script type="module" src="http://localhost:9001/resources/js/main.ts"></script>
+    <script type="module" src="http://localhost:{{env('VITE_PORT')}}/@vite/client"></script>
+    <script type="module" src="http://localhost:{{env('VITE_PORT')}}/resources/js/main.ts"></script>
     @endenv
 </head>
 

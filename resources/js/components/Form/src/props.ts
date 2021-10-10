@@ -1,10 +1,10 @@
-import type { FieldMapToTime, FormSchema } from './types/form';
-import type { CSSProperties, PropType } from 'vue';
-import type { ColEx } from './types';
-import type { TableActionType } from '/@/components/Table';
-import type { ButtonProps } from 'ant-design-vue/es/button/buttonTypes';
-import type { RowProps } from 'ant-design-vue/lib/grid/Row';
-import { propTypes } from '/@/utils/propTypes';
+import type { FieldMapToTime, FormSchema } from './types/form'
+import type { CSSProperties, PropType } from 'vue'
+import type { ColEx } from './types'
+import type { TableActionType } from '/@/components/Table'
+import type { ButtonProps } from 'ant-design-vue/es/button/buttonTypes'
+import type { RowProps } from 'ant-design-vue/lib/grid/Row'
+import { propTypes } from '/@/utils/propTypes'
 
 export const basicProps = {
   model: {
@@ -47,7 +47,7 @@ export const basicProps = {
   transformDateFunc: {
     type: Function as PropType<Fn>,
     default: (date: any) => {
-      return date._isAMomentObject ? date?.format('YYYY-MM-DD HH:mm:ss') : date;
+      return date._isAMomentObject ? date?.format('YYYY-MM-DD HH:mm:ss') : date
     },
   },
   rulesMessageJoinLabel: propTypes.bool.def(true),
@@ -66,7 +66,9 @@ export const basicProps = {
 
   labelCol: Object as PropType<Partial<ColEx>>,
 
-  layout: propTypes.oneOf(['horizontal', 'vertical', 'inline']).def('horizontal'),
+  layout: propTypes
+    .oneOf(['horizontal', 'vertical', 'inline'])
+    .def('horizontal'),
   tableAction: {
     type: Object as PropType<TableActionType>,
   },
@@ -78,4 +80,4 @@ export const basicProps = {
   labelAlign: propTypes.string,
 
   rowProps: Object as PropType<RowProps>,
-};
+}

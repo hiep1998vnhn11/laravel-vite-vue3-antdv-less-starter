@@ -1,37 +1,37 @@
 <template>
-    <div :class="[prefixCls, getAlign]" @click="onCellClick">
-        <template
-            v-for="(action, index) in getActions"
-            :key="`${index}-${action.label}`"
-        >
-            <Tooltip v-bind="getTooltip(action.tooltip)">
-                <PopConfirmButton v-bind="action">
-                    <Icon :icon="action.icon" class="mr-1" v-if="action.icon" />
-                    {{ action.label }}
-                </PopConfirmButton>
-            </Tooltip>
-            <Divider
-                class="action-divider"
-                v-if="
-                    divider &&
-                    index < getActions.length - (dropDownActions ? 0 : 1) &&
-                    getDropdownList.length > 0
-                "
-                type="vertical"
-            />
-        </template>
-        <Dropdown
-            :trigger="['hover']"
-            :dropMenuList="getDropdownList"
-            popconfirm
-            v-if="dropDownActions && getDropdownList.length > 0"
-        >
-            <slot name="more"></slot>
-            <a-button type="link" size="small" v-if="!$slots.more">
-                <MoreOutlined class="icon-more" />
-            </a-button>
-        </Dropdown>
-    </div>
+  <div :class="[prefixCls, getAlign]" @click="onCellClick">
+    <template
+      v-for="(action, index) in getActions"
+      :key="`${index}-${action.label}`"
+    >
+      <Tooltip v-bind="getTooltip(action.tooltip)">
+        <PopConfirmButton v-bind="action">
+          <Icon :icon="action.icon" class="mr-1" v-if="action.icon" />
+          {{ action.label }}
+        </PopConfirmButton>
+      </Tooltip>
+      <Divider
+        class="action-divider"
+        v-if="
+          divider &&
+          index < getActions.length - (dropDownActions ? 0 : 1) &&
+          getDropdownList.length > 0
+        "
+        type="vertical"
+      />
+    </template>
+    <Dropdown
+      :trigger="['hover']"
+      :dropMenuList="getDropdownList"
+      popconfirm
+      v-if="dropDownActions && getDropdownList.length > 0"
+    >
+      <slot name="more"></slot>
+      <a-button type="link" size="small" v-if="!$slots.more">
+        <MoreOutlined class="icon-more" />
+      </a-button>
+    </Dropdown>
+  </div>
 </template>
 <script lang="ts">
 import { defineComponent, PropType, computed, toRaw } from 'vue'
@@ -49,171 +49,169 @@ import { propTypes } from '/@/utils/propTypes'
 import { ACTION_COLUMN_FLAG } from '../const'
 
 export default defineComponent({
-    name: 'TableAction',
-    components: {
-        Icon,
-        PopConfirmButton,
-        Divider,
-        Dropdown,
-        MoreOutlined,
-        Tooltip,
+  name: 'TableAction',
+  components: {
+    Icon,
+    PopConfirmButton,
+    Divider,
+    Dropdown,
+    MoreOutlined,
+    Tooltip,
+  },
+  props: {
+    actions: {
+      type: Array as PropType<ActionItem[]>,
+      default: null,
     },
-    props: {
-        actions: {
-            type: Array as PropType<ActionItem[]>,
-            default: null,
-        },
-        dropDownActions: {
-            type: Array as PropType<ActionItem[]>,
-            default: null,
-        },
-        divider: propTypes.bool.def(true),
-        outside: propTypes.bool,
-        stopButtonPropagation: propTypes.bool.def(false),
+    dropDownActions: {
+      type: Array as PropType<ActionItem[]>,
+      default: null,
     },
-    setup(props) {
-        const { prefixCls } = useDesign('basic-table-action')
-        let table: Partial<TableActionType> = {}
-        if (!props.outside) {
-            table = useTableContext()
-        }
+    divider: propTypes.bool.def(true),
+    outside: propTypes.bool,
+    stopButtonPropagation: propTypes.bool.def(false),
+  },
+  setup(props) {
+    const { prefixCls } = useDesign('basic-table-action')
+    let table: Partial<TableActionType> = {}
+    if (!props.outside) {
+      table = useTableContext()
+    }
 
-        const { hasPermission } = usePermission()
-        function isIfShow(action: ActionItem): boolean {
-            const ifShow = action.ifShow
+    const { hasPermission } = usePermission()
+    function isIfShow(action: ActionItem): boolean {
+      const ifShow = action.ifShow
 
-            let isIfShow = true
+      let isIfShow = true
 
-            if (isBoolean(ifShow)) {
-                isIfShow = ifShow
-            }
-            if (isFunction(ifShow)) {
-                isIfShow = ifShow(action)
-            }
-            return isIfShow
-        }
+      if (isBoolean(ifShow)) {
+        isIfShow = ifShow
+      }
+      if (isFunction(ifShow)) {
+        isIfShow = ifShow(action)
+      }
+      return isIfShow
+    }
 
-        const getActions = computed(() => {
-            return (toRaw(props.actions) || [])
-                .filter((action) => {
-                    return hasPermission(action.auth) && isIfShow(action)
-                })
-                .map((action) => {
-                    const { popConfirm } = action
-                    return {
-                        type: 'link',
-                        size: 'small',
-                        ...action,
-                        ...(popConfirm || {}),
-                        onConfirm: popConfirm?.confirm,
-                        onCancel: popConfirm?.cancel,
-                        enable: !!popConfirm,
-                    }
-                })
+    const getActions = computed(() => {
+      return (toRaw(props.actions) || [])
+        .filter((action) => {
+          return hasPermission(action.auth) && isIfShow(action)
         })
-
-        const getDropdownList = computed(() => {
-            return (toRaw(props.dropDownActions) || [])
-                .filter((action) => {
-                    return hasPermission(action.auth) && isIfShow(action)
-                })
-                .map((action, index) => {
-                    const { label, popConfirm } = action
-                    return {
-                        ...action,
-                        ...popConfirm,
-                        onConfirm: popConfirm?.confirm,
-                        onCancel: popConfirm?.cancel,
-                        text: label,
-                        divider:
-                            index < props.dropDownActions.length - 1
-                                ? props.divider
-                                : false,
-                    }
-                })
+        .map((action) => {
+          const { popConfirm } = action
+          return {
+            type: 'link',
+            size: 'small',
+            ...action,
+            ...(popConfirm || {}),
+            onConfirm: popConfirm?.confirm,
+            onCancel: popConfirm?.cancel,
+            enable: !!popConfirm,
+          }
         })
+    })
 
-        const getAlign = computed(() => {
-            const columns = (table as TableActionType)?.getColumns?.() || []
-            const actionColumn = columns.find(
-                (item) => item.flag === ACTION_COLUMN_FLAG
-            )
-            return actionColumn?.align ?? 'left'
+    const getDropdownList = computed(() => {
+      return (toRaw(props.dropDownActions) || [])
+        .filter((action) => {
+          return hasPermission(action.auth) && isIfShow(action)
         })
-
-        const getTooltip = computed(() => {
-            return (data: string | TooltipProps): TooltipProps => {
-                if (isString(data)) {
-                    return { title: data, placement: 'bottom' }
-                } else {
-                    return Object.assign({ placement: 'bottom' }, data)
-                }
-            }
+        .map((action, index) => {
+          const { label, popConfirm } = action
+          return {
+            ...action,
+            ...popConfirm,
+            onConfirm: popConfirm?.confirm,
+            onCancel: popConfirm?.cancel,
+            text: label,
+            divider:
+              index < props.dropDownActions.length - 1 ? props.divider : false,
+          }
         })
+    })
 
-        function onCellClick(e: MouseEvent) {
-            if (!props.stopButtonPropagation) return
-            const target = e.target as HTMLElement
-            if (target.tagName === 'BUTTON') {
-                e.stopPropagation()
-            }
+    const getAlign = computed(() => {
+      const columns = (table as TableActionType)?.getColumns?.() || []
+      const actionColumn = columns.find(
+        (item) => item.flag === ACTION_COLUMN_FLAG
+      )
+      return actionColumn?.align ?? 'left'
+    })
+
+    const getTooltip = computed(() => {
+      return (data: string | TooltipProps): TooltipProps => {
+        if (isString(data)) {
+          return { title: data, placement: 'bottom' }
+        } else {
+          return Object.assign({ placement: 'bottom' }, data)
         }
+      }
+    })
 
-        return {
-            prefixCls,
-            getActions,
-            getDropdownList,
-            getAlign,
-            onCellClick,
-            getTooltip,
-        }
-    },
+    function onCellClick(e: MouseEvent) {
+      if (!props.stopButtonPropagation) return
+      const target = e.target as HTMLElement
+      if (target.tagName === 'BUTTON') {
+        e.stopPropagation()
+      }
+    }
+
+    return {
+      prefixCls,
+      getActions,
+      getDropdownList,
+      getAlign,
+      onCellClick,
+      getTooltip,
+    }
+  },
 })
 </script>
 <style lang="less">
 @prefix-cls: ~'@{namespace}-basic-table-action';
 
 .@{prefix-cls} {
+  display: flex;
+  align-items: center;
+
+  .action-divider {
+    display: table;
+  }
+
+  &.left {
+    justify-content: flex-start;
+  }
+
+  &.center {
+    justify-content: center;
+  }
+
+  &.right {
+    justify-content: flex-end;
+  }
+
+  button {
     display: flex;
     align-items: center;
 
-    .action-divider {
-        display: table;
+    span {
+      margin-left: 0 !important;
     }
+  }
 
-    &.left {
-        justify-content: flex-start;
+  .ant-divider,
+  .ant-divider-vertical {
+    margin: 0 2px;
+  }
+
+  .icon-more {
+    transform: rotate(90deg);
+
+    svg {
+      font-size: 1.1em;
+      font-weight: 700;
     }
-
-    &.center {
-        justify-content: center;
-    }
-
-    &.right {
-        justify-content: flex-end;
-    }
-
-    button {
-        display: flex;
-        align-items: center;
-
-        span {
-            margin-left: 0 !important;
-        }
-    }
-
-    .ant-divider,
-    .ant-divider-vertical {
-        margin: 0 2px;
-    }
-
-    .icon-more {
-        transform: rotate(90deg);
-
-        svg {
-            font-size: 1.1em;
-            font-weight: 700;
-        }
-    }
+  }
 }
 </style>

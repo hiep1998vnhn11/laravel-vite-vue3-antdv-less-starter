@@ -1,18 +1,18 @@
 import { ref, onBeforeUpdate, Ref } from 'vue'
 
 export function useRefs(): [
-    Ref<HTMLElement[]>,
-    (index: number) => (el: HTMLElement) => void
+  Ref<HTMLElement[]>,
+  (index: number) => (el: HTMLElement) => void
 ] {
-    const refs = ref<HTMLElement[]>([])
+  const refs = ref<HTMLElement[]>([])
 
-    onBeforeUpdate(() => {
-        refs.value = []
-    })
+  onBeforeUpdate(() => {
+    refs.value = []
+  })
 
-    const setRefs = (index: number) => (el: HTMLElement) => {
-        refs.value[index] = el
-    }
+  const setRefs = (index: number) => (el: HTMLElement) => {
+    refs.value[index] = el
+  }
 
-    return [refs, setRefs]
+  return [refs, setRefs]
 }

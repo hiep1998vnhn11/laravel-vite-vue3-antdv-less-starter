@@ -1,6 +1,6 @@
-import { defHttp } from '/@/utils/http/axios';
-import { ListShipper } from './model/shipperModel';
+import { defHttp } from '/@/utils/http/axios'
+import { ListShipper } from './model/shipperModel'
 
-const indexApi = '/admin/shippers';
+const indexApi = '/admin/shippers'
 
-export const getListShipper = () => defHttp.get<ListShipper>({ url: indexApi });
+export const getListShipper = () => defHttp.get<ListShipper>({ url: indexApi })

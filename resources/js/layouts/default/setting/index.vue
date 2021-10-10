@@ -1,8 +1,8 @@
 <template>
-    <div @click="openDrawer(true)">
-        <Icon icon="ion:settings-outline" />
-        <SettingDrawer @register="register" />
-    </div>
+  <div @click="openDrawer(true)">
+    <Icon icon="ion:settings-outline" />
+    <SettingDrawer @register="register" />
+  </div>
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue'
@@ -12,15 +12,15 @@ import Icon from '/@/components/Icon/Icon.vue'
 import { useDrawer } from '/@/components/Drawer'
 
 export default defineComponent({
-    name: 'SettingButton',
-    components: { SettingDrawer, Icon },
-    setup() {
-        const [register, { openDrawer }] = useDrawer()
+  name: 'SettingButton',
+  components: { SettingDrawer, Icon },
+  setup() {
+    const [register, { openDrawer }] = useDrawer()
 
-        return {
-            register,
-            openDrawer,
-        }
-    },
+    return {
+      register,
+      openDrawer,
+    }
+  },
 })
 </script>

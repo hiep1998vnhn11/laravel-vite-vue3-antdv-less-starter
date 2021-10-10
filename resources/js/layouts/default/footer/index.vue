@@ -1,6 +1,6 @@
 <template>
-    <Footer :class="prefixCls" v-if="getShowLayoutFooter" ref="footerRef">
-        <!-- <div :class="`${prefixCls}__links`">
+  <Footer :class="prefixCls" v-if="getShowLayoutFooter" ref="footerRef">
+    <!-- <div :class="`${prefixCls}__links`">
             <a @click="openWindow(SITE_URL)">{{
                 t('layout.footer.onlinePreview')
             }}</a>
@@ -12,8 +12,8 @@
                 t('layout.footer.onlineDocument')
             }}</a>
         </div> -->
-        <div>Copyright &copy;{{ year }} Edapt</div>
-    </Footer>
+    <div>Copyright &copy;{{ year }} Edapt</div>
+  </Footer>
 </template>
 
 <script lang="ts">
@@ -32,42 +32,40 @@ import { useDesign } from '/@/hooks/web/useDesign'
 import { useLayoutHeight } from '../content/useContentViewHeight'
 
 export default defineComponent({
-    name: 'LayoutFooter',
-    components: { Footer: Layout.Footer, GithubFilled },
-    setup() {
-        const { t } = useI18n()
-        const { getShowFooter } = useRootSetting()
-        const { currentRoute } = useRouter()
-        const { prefixCls } = useDesign('layout-footer')
-        const year = new Date().getFullYear()
+  name: 'LayoutFooter',
+  components: { Footer: Layout.Footer, GithubFilled },
+  setup() {
+    const { t } = useI18n()
+    const { getShowFooter } = useRootSetting()
+    const { currentRoute } = useRouter()
+    const { prefixCls } = useDesign('layout-footer')
+    const year = new Date().getFullYear()
 
-        const footerRef = ref<ComponentRef>(null)
-        const { setFooterHeight } = useLayoutHeight()
+    const footerRef = ref<ComponentRef>(null)
+    const { setFooterHeight } = useLayoutHeight()
 
-        const getShowLayoutFooter = computed(() => {
-            if (unref(getShowFooter)) {
-                const footerEl = unref(footerRef)?.$el
-                setFooterHeight(footerEl?.offsetHeight || 0)
-            } else {
-                setFooterHeight(0)
-            }
-            return (
-                unref(getShowFooter) && !unref(currentRoute).meta?.hiddenFooter
-            )
-        })
+    const getShowLayoutFooter = computed(() => {
+      if (unref(getShowFooter)) {
+        const footerEl = unref(footerRef)?.$el
+        setFooterHeight(footerEl?.offsetHeight || 0)
+      } else {
+        setFooterHeight(0)
+      }
+      return unref(getShowFooter) && !unref(currentRoute).meta?.hiddenFooter
+    })
 
-        return {
-            getShowLayoutFooter,
-            prefixCls,
-            t,
-            DOC_URL,
-            GITHUB_URL,
-            SITE_URL,
-            openWindow,
-            footerRef,
-            year,
-        }
-    },
+    return {
+      getShowLayoutFooter,
+      prefixCls,
+      t,
+      DOC_URL,
+      GITHUB_URL,
+      SITE_URL,
+      openWindow,
+      footerRef,
+      year,
+    }
+  },
 })
 </script>
 <style lang="less" scoped>
@@ -78,27 +76,27 @@ export default defineComponent({
 @hover-color: rgba(0, 0, 0, 0.85);
 
 .@{prefix-cls} {
-    color: @normal-color;
-    text-align: center;
+  color: @normal-color;
+  text-align: center;
 
-    &__links {
-        margin-bottom: 8px;
+  &__links {
+    margin-bottom: 8px;
 
-        a {
-            color: @normal-color;
+    a {
+      color: @normal-color;
 
-            &:hover {
-                color: @hover-color;
-            }
-        }
+      &:hover {
+        color: @hover-color;
+      }
     }
+  }
 
-    &__github {
-        margin: 0 30px;
+  &__github {
+    margin: 0 30px;
 
-        &:hover {
-            color: @hover-color;
-        }
+    &:hover {
+      color: @hover-color;
     }
+  }
 }
 </style>

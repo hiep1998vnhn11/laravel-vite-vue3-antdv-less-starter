@@ -16,30 +16,30 @@ const SIDER_LIGHTEN_BG_COLOR = '--sider-dark-lighten-bg-color'
  * @param color
  */
 export function updateHeaderBgColor(color?: string) {
-    const darkMode = store.getters['app/getDarkMode'] === ThemeEnum.DARK
-    if (!color) {
-        if (darkMode) {
-            color = '#151515'
-        } else {
-            color = store.getters['app/getHeaderSetting'].bgColor
-        }
+  const darkMode = store.getters['app/getDarkMode'] === ThemeEnum.DARK
+  if (!color) {
+    if (darkMode) {
+      color = '#151515'
+    } else {
+      color = store.getters['app/getHeaderSetting'].bgColor
     }
-    // bg color
-    setCssVar(HEADER_BG_COLOR_VAR, color)
+  }
+  // bg color
+  setCssVar(HEADER_BG_COLOR_VAR, color)
 
-    // hover color
-    const hoverColor = lighten(color!, 6)
-    setCssVar(HEADER_BG_HOVER_COLOR_VAR, hoverColor)
-    setCssVar(HEADER_MENU_ACTIVE_BG_COLOR_VAR, hoverColor)
+  // hover color
+  const hoverColor = lighten(color!, 6)
+  setCssVar(HEADER_BG_HOVER_COLOR_VAR, hoverColor)
+  setCssVar(HEADER_MENU_ACTIVE_BG_COLOR_VAR, hoverColor)
 
-    // Determine the depth of the color value and automatically switch the theme
-    const isDark = colorIsDark(color!)
+  // Determine the depth of the color value and automatically switch the theme
+  const isDark = colorIsDark(color!)
 
-    store.commit('app/SET_PROJECT_CONFIG', {
-        headerSetting: {
-            theme: isDark || darkMode ? ThemeEnum.DARK : ThemeEnum.LIGHT,
-        },
-    })
+  store.commit('app/SET_PROJECT_CONFIG', {
+    headerSetting: {
+      theme: isDark || darkMode ? ThemeEnum.DARK : ThemeEnum.LIGHT,
+    },
+  })
 }
 
 /**
@@ -47,21 +47,21 @@ export function updateHeaderBgColor(color?: string) {
  * @param color  bg color
  */
 export function updateSidebarBgColor(color?: string) {
-    const darkMode = store.getters['app/getDarkMode'] === ThemeEnum.DARK
-    if (!color) {
-        if (darkMode) {
-            color = '#212121'
-        } else {
-            color = store.getters['app/getMenuSetting'].bgColor
-        }
+  const darkMode = store.getters['app/getDarkMode'] === ThemeEnum.DARK
+  if (!color) {
+    if (darkMode) {
+      color = '#212121'
+    } else {
+      color = store.getters['app/getMenuSetting'].bgColor
     }
-    setCssVar(SIDER_DARK_BG_COLOR, color)
-    setCssVar(SIDER_DARK_DARKEN_BG_COLOR, darken(color!, 6))
-    setCssVar(SIDER_LIGHTEN_BG_COLOR, lighten(color!, 5))
-    const isLight = ['#fff', '#ffffff'].includes(color!.toLowerCase())
-    store.commit('app/SET_PROJECT_CONFIG', {
-        menuSetting: {
-            theme: isLight && !darkMode ? ThemeEnum.LIGHT : ThemeEnum.DARK,
-        },
-    })
+  }
+  setCssVar(SIDER_DARK_BG_COLOR, color)
+  setCssVar(SIDER_DARK_DARKEN_BG_COLOR, darken(color!, 6))
+  setCssVar(SIDER_LIGHTEN_BG_COLOR, lighten(color!, 5))
+  const isLight = ['#fff', '#ffffff'].includes(color!.toLowerCase())
+  store.commit('app/SET_PROJECT_CONFIG', {
+    menuSetting: {
+      theme: isLight && !darkMode ? ThemeEnum.LIGHT : ThemeEnum.DARK,
+    },
+  })
 }

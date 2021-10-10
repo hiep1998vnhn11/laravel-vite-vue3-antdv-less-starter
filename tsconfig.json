@@ -4,12 +4,21 @@
         "module": "esnext",
         "moduleResolution": "node",
         "strict": true,
+        "forceConsistentCasingInFileNames": true,
+        "allowSyntheticDefaultImports": true,
+        "strictFunctionTypes": false,
         "jsx": "preserve",
+        "allowJs": true,
         "sourceMap": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
         "resolveJsonModule": true,
         "esModuleInterop": true,
-        "typeRoots": ["./resources/types"],
+        "experimentalDecorators": true,
+        "typeRoots": ["./node_modules/@types/", "./resources/types"],
         "baseUrl": ".",
+        "noImplicitAny": false,
+        "skipLibCheck": true,
         "paths": {
             "/@/*": ["resources/js/*"],
             "/#/*": ["resources/types/*"]
@@ -23,8 +32,10 @@
         "resources/js/**/*.tsx",
         "resources/js/**/*.vue",
         "resources/types/**/*.d.ts",
+        "resources/types/**/*.ts",
         "vite.config.ts",
         "build/**/*.ts",
         "build/**/*.d.ts",
-    ]
+    ],
+    "exclude": ["node_modules", "tests/server/**/*.ts", "dist", "**/*.js"]
 }
