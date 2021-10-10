@@ -7,6 +7,7 @@ export interface CreateAxiosOptions extends AxiosRequestConfig {
   transform?: AxiosTransform
   requestOptions?: RequestOptions
 }
+
 export abstract class AxiosTransform {
   beforeRequestHook?: (
     config: AxiosRequestConfig,

@@ -2,8 +2,8 @@
  * @description: Login interface parameters
  */
 export interface LoginParams {
-  access_token: string
-  env?: string
+  email: string
+  password: string
 }
 
 export interface RoleInfo {
@@ -14,41 +14,25 @@ export interface RoleInfo {
 /**
  * @description: Login interface return value
  */
-
-export interface UserInfo {
-  username: string
-  type: string
-  sub: string
-  school_id: string
-  email: string
-  school_year: string | null
-  staff_id: string | null
-  role_code: string
-  year_level: string
-  ip_school: string
-  ip_home: string
-}
 export interface LoginResultModel {
   access_token: string
-  refresh_token: string
-  userInfo: GetUserInfoModel
+  expires_in: number
+  token_type: string
 }
 
 /**
  * @description: Get user information return value
  */
 export interface GetUserInfoModel {
-  username: string
-  school_id: string
-  school_year: string
-  year_level: string
-  ip_id: string
-  ip_school: string
-  ip_home: string
-  dynamic_ip: string
-  cognito_login_id: string
-  avatar?: string
-  roles: string[]
+  roles: RoleInfo[]
+  id: number
+  fullname: string
+  shortname: string
+  email: string
+  max_id: number
+  phone: string
+  link_id?: number
+  telegram_session?: string
 }
 
 export interface ChangePasswordParams {
@@ -57,11 +41,33 @@ export interface ChangePasswordParams {
   password_confirmation: string
 }
 
+export interface FirstChangePasswordParams {
+  password: string
+  password_confirmation: string
+}
+
 export interface GetCodeParams {
-  email: string
+  phone: string
 }
 
 export interface ResetPasswordParams {
-  email: string
+  phone: string
   code: string
+  password: string
+  password_confirmation: string
+}
+export interface ForgotPasswordParams {
+  email: string
+  code?: string
+  password?: string
+  password_confirmation?: string
+}
+
+export interface VerifySmsParams {
+  phone: string
+  code: string
+}
+
+export interface UpdateInfoParams {
+  fullname: string
 }

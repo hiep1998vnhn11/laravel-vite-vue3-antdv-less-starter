@@ -9,19 +9,22 @@ import { registerGlobComp } from '/@/components/registerGlobComp'
 import { setupErrorHandle } from '/@/logics/error-handle'
 import { setupGlobDirectives } from '/@/directives'
 import { setupRouterGuard } from '/@/router/guard'
-
-import 'ant-design-vue/dist/antd.less'
+if (import.meta.env.DEV) {
+  import('ant-design-vue/dist/antd.less')
+}
 
 async function bootstrap() {
   const app = createApp(App)
   setupStore(app)
   initAppConfigStore()
-  setupErrorHandle(app)
-  setupGlobDirectives(app)
+
   registerGlobComp(app)
   await setupI18n(app)
   setupRouter(app)
-  // setupRouterGuard(router)
+  setupRouterGuard(router)
+
+  setupErrorHandle(app)
+  setupGlobDirectives(app)
   await router.isReady()
   app.mount('#app')
 }

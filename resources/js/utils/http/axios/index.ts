@@ -10,7 +10,6 @@ import { isString } from '/@/utils/is'
 import { getToken } from '/@/utils/auth'
 import { setObjToUrlParams, deepMerge } from '/@/utils'
 import { store } from '/@/store'
-import { router } from '/@/router'
 import { useI18n } from '/@/hooks/web/useI18n'
 import { joinTimestamp, formatRequestDate } from './helper'
 
@@ -52,10 +51,7 @@ const transform: AxiosTransform = {
         }
     }
     if (options.errorMessageMode === 'modal') {
-      createErrorModal({
-        title: t('sys.api.errorTip'),
-        content: timeoutMsg,
-      })
+      createErrorModal({ title: t('sys.api.errorTip'), content: timeoutMsg })
     } else if (options.errorMessageMode === 'message') {
       createMessage.error(timeoutMsg)
     }
@@ -118,10 +114,10 @@ const transform: AxiosTransform = {
     }
     return config
   },
-  requestInterceptors: (config: any) => {
+  requestInterceptors: (config) => {
     const token = getToken()
     if (token) {
-      config.headers.Authorization = 'Bearer ' + token
+      config.headers.Authorization = 'Bearer' + token
     }
     return config
   },
@@ -157,7 +153,7 @@ const transform: AxiosTransform = {
         }
         return Promise.reject(error)
       }
-    } catch (error: any) {
+    } catch (error) {
       throw new Error(error)
     }
 
@@ -171,12 +167,9 @@ function createAxios(opt?: Partial<CreateAxiosOptions>) {
     deepMerge(
       {
         authenticationScheme: '',
-        timeout: 20 * 1000,
+        timeout: 10 * 1000,
         urlPrefix: urlPrefix,
-        headers: {
-          'Content-Type': ContentTypeEnum.JSON,
-          environment: localStorage.getItem('env'),
-        },
+        headers: { 'Content-Type': ContentTypeEnum.JSON },
         transform,
         requestOptions: {
           joinPrefix: true,

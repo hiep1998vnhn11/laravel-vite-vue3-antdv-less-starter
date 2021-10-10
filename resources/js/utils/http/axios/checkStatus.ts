@@ -32,7 +32,7 @@ export function checkStatus(
         store.dispatch('user/setToken', undefined)
         store.dispatch('user/setSessionTimeout', true)
       } else {
-        store.dispatch('user/confirmLoginOut', true)
+        store.dispatch('user/sessionLogout', true)
       }
       break
     case 403:
@@ -71,10 +71,7 @@ export function checkStatus(
 
   if (errMessage) {
     if (errorMessageMode === 'modal') {
-      createErrorModal({
-        title: t('sys.api.errorTip'),
-        content: errMessage,
-      })
+      createErrorModal({ title: t('sys.api.errorTip'), content: errMessage })
     } else if (errorMessageMode === 'message') {
       error({
         content: errMessage,

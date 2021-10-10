@@ -72,10 +72,12 @@ const actions = {
   ): Promise<GetUserInfoModel | null> {
     try {
       const data = await loginApi(params)
-      const { access_token, refresh_token, userInfo } = data
+      const { access_token, expires_in } = data
+      console.log(access_token)
       commit('SET_STATE', ['token', access_token])
       setAuthCache(TOKEN_KEY, access_token)
-      setAuthCache(REFRESH_TOKEN_KEY, refresh_token)
+      setAuthCache(REFRESH_TOKEN_KEY, access_token)
+      const userInfo = await getUserInfo()
       commit('SET_STATE', ['userInfo', userInfo])
       setAuthCache(USER_INFO_KEY, userInfo)
       const roleList = userInfo?.roles.map(
