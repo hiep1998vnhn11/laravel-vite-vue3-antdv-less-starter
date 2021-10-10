@@ -45,6 +45,7 @@ export function loginApi(
     },
     {
       errorMessageMode: mode,
+      isTransformResponse: false,
     }
   )
 }

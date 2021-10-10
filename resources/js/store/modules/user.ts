@@ -73,18 +73,19 @@ const actions = {
     try {
       const data = await loginApi(params)
       const { access_token, expires_in } = data
-      console.log(access_token)
       commit('SET_STATE', ['token', access_token])
       setAuthCache(TOKEN_KEY, access_token)
       setAuthCache(REFRESH_TOKEN_KEY, access_token)
       const userInfo = await getUserInfo()
       commit('SET_STATE', ['userInfo', userInfo])
       setAuthCache(USER_INFO_KEY, userInfo)
-      const roleList = userInfo?.roles.map(
-        (item: any) => item.name
-      ) as RoleEnum[]
-      commit('SET_STATE', ['roleList', roleList])
-      setAuthCache(ROLES_KEY, roleList)
+      if (userInfo?.roles) {
+        const roleList = userInfo?.roles.map(
+          (item: any) => item.name
+        ) as RoleEnum[]
+        commit('SET_STATE', ['roleList', roleList])
+        setAuthCache(ROLES_KEY, roleList)
+      }
       const sessionTimeout = state.sessionTimeout
       sessionTimeout && commit('SET_STATE', ['sessionTimeout', false])
       await router.replace(PageEnum.BASE_HOME)
@@ -116,9 +117,13 @@ const actions = {
     const userInfo = await getUserInfo()
     commit('SET_STATE', ['userInfo', userInfo])
     setAuthCache(USER_INFO_KEY, userInfo)
-    const roleList = userInfo?.roles.map((item: any) => item.name) as RoleEnum[]
-    commit('SET_STATE', ['roleList', roleList])
-    setAuthCache(ROLES_KEY, roleList)
+    if (userInfo?.roles) {
+      const roleList = userInfo?.roles.map(
+        (item: any) => item.name
+      ) as RoleEnum[]
+      commit('SET_STATE', ['roleList', roleList])
+      setAuthCache(ROLES_KEY, roleList)
+    }
   },
 }
 

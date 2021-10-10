@@ -4,6 +4,7 @@ import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 import { configThemePlugin } from './build/vite/plugin/theme'
 import { configHtmlPlugin } from './build/vite/plugin/html'
+import { configSvgIconsPlugin } from './build/vite/plugin/svgSprite'
 import { wrapperEnv } from './build/utils'
 import moment from 'moment'
 import pkg from './package.json'
@@ -72,6 +73,7 @@ export default ({ command, mode }: ConfigEnv) => {
       vueJsx(),
       configThemePlugin(isBuild),
       configHtmlPlugin(viteEnv, isBuild),
+      configSvgIconsPlugin(isBuild),
     ],
     define: {
       __INTLIFY_PROD_DEVTOOLS__: false,
